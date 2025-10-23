@@ -2,11 +2,10 @@
 
 import React, { useState } from 'react'
 import axios from 'axios'
-import Link from 'next/link'
 import Pagination from '../Components/Pagination'
 import ErrorBoundary from '../Components/ErrorBoundary'
 import LoadingSpinner from '../Components/Spinner/LoadingSpinner'
-import { FaTrash, FaPlus } from 'react-icons/fa'
+import { FaTrash, FaPlus, FaComment, FaWindowClose } from 'react-icons/fa'
 import { MdVisibility } from 'react-icons/md'
 import TodoModal from '../Components/TodoModal'
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query'
@@ -325,51 +324,58 @@ export default function ClientTodos({ filter = 'all' }: ClientTodosProps) {
         </section>
         <section className='navigation' style={{ marginBottom: '20px' }}>
           <TodoNav />
-          <div style={{ width: "100%", display: 'flex', justifyContent: "center", position: "fixed", zIndex: 1000, bottom: 10, gap: '10px', marginTop: '10px' }}>
+          <div
+            style={{
+              display: 'flex',
+              position: 'fixed',
+              zIndex: 1000,
+              bottom: 10,
+              width: '100%',
+              gap: '10px',
+              marginTop: '10px'
+            }}
+          >
             {' '}
             <div
               style={{
                 display: 'flex',
                 justifyContent: 'center',
-                alignItems: 'center'
+                alignItems: 'center',
+                gap: '10px'
               }}
             >
-              <button
-                onClick={() => setShowDeletedModal(true)}
-                style={{
-                  color: 'red',
-                  background: 'none',
-                  border: 'none',
-                  cursor: 'pointer',
-                  backgroundColor: 'grey',
-                  padding: '8px',
-                  borderRadius: '5px'
-                }}
-              >
-                View Deleted Todos
-              </button>
-            </div>
-            <div
-              style={{
-                display: 'flex',
-                justifyContent: 'center',
-                alignItems: 'center'
-              }}
-            >
-              <button
-                onClick={() => setShowChat(prev => !prev)}
-                style={{
-                  color: 'white',
-                  backgroundColor: showChat ? 'red' : 'blue',
-                  border: 'none',
-                  cursor: 'pointer',
-                
-                  padding: '8px 12px',
-                  borderRadius: '5px'
-                }}
-              >
-                {showChat ? 'Close Chat' : 'Open Chat'}
-              </button>
+              {' '}
+              <div>
+                <button
+                  onClick={() => setShowDeletedModal(true)}
+                  style={{
+                    color: 'red',
+                    background: 'none',
+                    border: 'none',
+                    cursor: 'pointer',
+                    backgroundColor: 'grey',
+                    padding: '8px',
+                    borderRadius: '5px'
+                  }}
+                >
+                  View Deleted Todos
+                </button>
+              </div>
+              <div>
+                <button
+                  onClick={() => setShowChat(prev => !prev)}
+                  style={{
+                    color: 'white',
+                    backgroundColor: showChat ? 'red' : 'blue',
+                    border: 'none',
+                    cursor: 'pointer',
+                    padding: '8px 12px',
+                    borderRadius: '5px'
+                  }}
+                >
+                  {showChat ? <FaWindowClose /> : <FaComment />}
+                </button>
+              </div>
             </div>
           </div>
           {isLoading && <LoadingSpinner />}
