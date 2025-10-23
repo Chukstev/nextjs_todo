@@ -1,36 +1,106 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# 📝 Todo List App
 
-## Getting Started
+This is a simple and functional Todo List application built with React, React Query, Axios and LocalStorage. It allows users to add, view, edit and delete todos. This todo list application implements pagination, search and filter and routing **using react routes**.
 
-First, run the development server:
+---
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+## 📌 Table of Contents
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+- [Features](#features)
+- [Images](#images)
+- [Tech Stack](#tech-stack)
+- [Getting Started](#getting-started)
+- [Usage](#usage)
+- [Project Structure](#project-structure)
+- [API Used](#api-used)
+- [Future Improvements](#future-improvements)
+- [Credits](#credits)
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+---
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## 🚀 Features
 
-## Learn More
+- ✅ Modify todo list (add, edit, delete)
+- ✅ Local storage/Persistence
+- ✅ Restore todo functionality
+- ✅ Search todos in real time
+- ✅ Filter todos by status
+- ✅ Error boundaries
+- ✅ Error handling with real time messages
+- ✅ Pagination
+- ✅ Responsive design (Mobile, Tablet and Desktop)
 
-To learn more about Next.js, take a look at the following resources:
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+---
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## 🛠️ Tech Stack
 
-## Deploy on Vercel
+- **Frontend:** React
+- **Routing:** App Router
+- **HTTP Requests:** Axios
+- **Data Fetching and Caching:** Tanstack React Query
+- **Persistence:** LocalStorage
+- **Icon:** React Icons
+- **Styling:** Custom CSS
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+---
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## 🏁 Getting Started
+
+### Prerequisites
+
+- install [Node.js](https://nodejs.org)
+  It comes with npm
+
+### Install React And Its Dependencies
+
+In the terminal, this code is run to begin the React set up project with vite
+
+`pnpm create-next-app@latest`
+
+After initializing the project and selecting React (JavaScript) during the setup prompts, I installed all required dependencies using `npm install.` I then navigated into the project directory via `cd TO-DO LIST APP` and launched the development server with `pnpm dev` to begin local development.
+
+---
+
+## 📖 Usage
+
+1. Add todos by inputting your todo in the todo input field.
+2. Search for todos by typing your query in the search bar.
+3. Mark your completed todos as done by clicking the checkboxes.
+4. View your completed or pending todos is the already sorted routes (All. Pending, Completed).
+5. Delete unwanted todo or completed todos.
+6. Use the page numbers below to navigate the different todo pages.
+7. See your deleted todos and restore selected todos or permanently delete them.
+8. live chat functionality
+
+---
+
+## 📂 Project Structure
+
+project-root/
+  ├── package.json
+  ├── public/
+  └── src/
+
+---
+## 🔗 API Used
+
+- JSONPlaceholder Todos
+ > Only used for initial fetching of data. Further mutations were handled locally via LocalStorage.
+
+---
+
+## 🚧 Future Improvements
+
+- Dark mode support
+- UI/UX improvements
+
+---
+
+## 🙏🏻 Credits
+
+- Altschool Africa
+- Mr Oluwasetemi Ojo (Altschool Frontend Engineering Instructor)
+- External Resources: Youtube, Google search.
+
+
