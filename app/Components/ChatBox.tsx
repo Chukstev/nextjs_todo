@@ -55,30 +55,37 @@ export default function ChatBox() {
   return (
     <div
       style={{
-        borderTop: '1px solid lightgray',
-        paddingTop: '10px',
-        marginTop: '20px',
         width: '100%',
-        maxWidth: '600px'
+        height: '100%',
+        display: 'flex',
+        flexDirection: 'column',
+        padding: '10px'
       }}
     >
-      <h3>Live Chat</h3>
+      <h3 style={{ margin: '0 0 15px 0' }}>Live Chat</h3>
       <div
         style={{
-          height: '250px',
+          flex: 1,
           overflowY: 'auto',
           border: '1px solid #ddd',
           borderRadius: '8px',
           padding: '10px',
-          marginBottom: '10px',
-          background: '#fafafa'
+          marginBottom: '15px',
+          background: '#fafafa',
+          minHeight: '200px',
+          maxHeight: 'calc(100vh - 250px)'
         }}
       >
         {messages.map((msg, i) => (
-          <div key={i} style={{ marginBottom: '5px' }}>
+          <div key={i} style={{ marginBottom: '8px', wordBreak: 'break-word' }}>
             <strong>{msg.user}</strong>: {msg.message}
             <span
-              style={{ fontSize: '0.8em', color: 'gray', marginLeft: '8px' }}
+              style={{
+                fontSize: '0.8em',
+                color: 'gray',
+                marginLeft: '8px',
+                whiteSpace: 'nowrap'
+              }}
             >
               {new Date(msg.timestamp).toLocaleTimeString()}
             </span>
@@ -86,7 +93,10 @@ export default function ChatBox() {
         ))}
       </div>
 
-      <form onSubmit={sendMessage} style={{ display: 'flex', gap: '8px' }}>
+      <form
+        onSubmit={sendMessage}
+        style={{ display: 'flex', gap: '8px', marginTop: 'auto' }}
+      >
         <input
           type='text'
           placeholder='Your name'
@@ -95,8 +105,9 @@ export default function ChatBox() {
           style={{
             flex: 1,
             border: '1px solid #ccc',
-            padding: '5px',
-            borderRadius: '4px'
+            padding: '8px',
+            borderRadius: '4px',
+            minWidth: 0
           }}
         />
         <input
@@ -107,19 +118,22 @@ export default function ChatBox() {
           style={{
             flex: 2,
             border: '1px solid #ccc',
-            padding: '5px',
-            borderRadius: '4px'
+            padding: '8px',
+            borderRadius: '4px',
+            minWidth: 0
           }}
         />
         <button
           type='submit'
           style={{
-            background: 'blue',
+            background: '#2196F3',
             color: 'white',
             border: 'none',
             borderRadius: '4px',
-            padding: '6px 12px',
-            cursor: 'pointer'
+            padding: '8px 16px',
+            cursor: 'pointer',
+            whiteSpace: 'nowrap',
+            fontWeight: 'bold'
           }}
         >
           Send

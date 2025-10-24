@@ -21,11 +21,17 @@ export default function DeletedTodosModal({
   const [selectedIds, setSelectedIds] = useState<number[]>([])
   const [confirmDelete, setConfirmDelete] = useState<boolean>(false)
 
+  const queryClient = useQueryClient()
+
   useEffect(() => {
     const stored = localStorage.getItem('deletedTodos')
-    if (stored) setDeletedTodos(JSON.parse(stored))
-  }, [isOpen])
-  const queryClient = useQueryClient()
+    if (stored) {
+      const parsedTodos = JSON.parse(stored)
+      setDeletedTodos(parsedTodos)
+      // Update the React Query cache
+      queryClient.setQueryData(['deletedTodos'], parsedTodos)
+    }
+  }, [isOpen, queryClient])
 
   if (!isOpen) return null
 
@@ -49,7 +55,9 @@ export default function DeletedTodosModal({
     setDeletedTodos(remaining)
     setSelectedIds([])
 
+    // Update both todos and deletedTodos caches
     queryClient.setQueryData(['todos'], [...storedTodos, ...toRestore])
+    queryClient.setQueryData(['deletedTodos'], remaining)
   }
   const permanentlyDeleteSelected = () => {
     if (selectedIds.length === 0) return
@@ -64,6 +72,9 @@ export default function DeletedTodosModal({
     setDeletedTodos(remaining)
     setSelectedIds([])
     setConfirmDelete(false)
+
+    // Update deletedTodos cache
+    queryClient.setQueryData(['deletedTodos'], remaining)
   }
   const cancelDelete = () => {
     setConfirmDelete(false)

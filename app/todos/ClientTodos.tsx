@@ -1,6 +1,6 @@
 'use client'
 
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import axios from 'axios'
 import Pagination from '../Components/Pagination'
 import ErrorBoundary from '../Components/ErrorBoundary'
@@ -131,16 +131,22 @@ export default function ClientTodos({ filter = 'all' }: ClientTodosProps) {
   const [selectedTodo, setSelectedTodo] = useState<Todo | null>(null)
   const [searchTerm, setSearchTerm] = useState<string>('')
   const [alertMessage, setAlertMessage] = useState<string>('')
-  const [deletedTodos, setDeletedTodos] = useState<Todo[]>([])
   const [todosPerPage, setTodosPerPage] = useState<number>(10)
   const [showDeletedModal, setShowDeletedModal] = useState(false)
   const [showChat, setShowChat] = useState(false)
   const queryClient = useQueryClient()
 
+  // Query for deleted todos
+  const { data: deletedTodos = [] } = useQuery<Todo[]>({
+    queryKey: ['deletedTodos'],
+    queryFn: () => {
+      const stored = localStorage.getItem('deletedTodos')
+      return stored ? JSON.parse(stored) : []
+    }
+  })
+
   const fetchTodos = async (): Promise<Todo[]> => {
     const localData = localStorage.getItem('todos')
-    const deletedData = localStorage.getItem('deletedTodos')
-    if (deletedData) setDeletedTodos(JSON.parse(deletedData))
     if (localData) {
       return JSON.parse(localData) as Todo[]
     } else {
@@ -226,9 +232,8 @@ export default function ClientTodos({ filter = 'all' }: ClientTodosProps) {
         { ...todoToDelete, deletedAt: new Date().toISOString() }
       ]
       localStorage.setItem('deletedTodos', JSON.stringify(updatedDeleted))
-      setDeletedTodos(updatedDeleted)
+      queryClient.setQueryData(['deletedTodos'], updatedDeleted)
       updateLocalStorage(updatedTodos)
-      localStorage.setItem('deletedTodos', JSON.stringify(updatedDeleted))
 
       return updatedTodos
     })
