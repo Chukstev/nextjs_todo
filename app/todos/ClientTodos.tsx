@@ -326,57 +326,72 @@ export default function ClientTodos({ filter = 'all' }: ClientTodosProps) {
           <TodoNav />
           <div
             style={{
-              display: 'flex',
               position: 'fixed',
-              zIndex: 1000,
-              bottom: 10,
-              width: '100%',
+              right: '20px',
+              bottom: '20px',
+              display: 'flex',
               gap: '10px',
-              marginTop: '10px'
+              zIndex: 1000
             }}
           >
-            {' '}
-            <div
+            <button
+              onClick={() => setShowChat(prev => !prev)}
               style={{
+                color: 'white',
+                backgroundColor: showChat ? 'red' : 'blue',
+                border: 'none',
+                cursor: 'pointer',
+                padding: '12px',
+                borderRadius: '50%',
                 display: 'flex',
-                justifyContent: 'center',
                 alignItems: 'center',
-                gap: '10px'
+                justifyContent: 'center',
+                boxShadow: '0 2px 5px rgba(0,0,0,0.2)'
               }}
             >
-              {' '}
-              <div>
-                <button
-                  onClick={() => setShowDeletedModal(true)}
+              {showChat ? <FaWindowClose size={20} /> : <FaComment size={20} />}
+            </button>
+
+            <button
+              onClick={() => setShowDeletedModal(true)}
+              style={{
+                position: 'relative',
+                color: 'white',
+                backgroundColor: '#ff4444',
+                border: 'none',
+                cursor: 'pointer',
+                padding: '12px',
+                borderRadius: '50%',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                boxShadow: '0 2px 5px rgba(0,0,0,0.2)'
+              }}
+            >
+              <FaTrash size={20} />
+              {deletedTodos.length > 0 && (
+                <div
                   style={{
-                    color: 'red',
-                    background: 'none',
-                    border: 'none',
-                    cursor: 'pointer',
-                    backgroundColor: 'grey',
-                    padding: '8px',
-                    borderRadius: '5px'
-                  }}
-                >
-                  View Deleted Todos
-                </button>
-              </div>
-              <div>
-                <button
-                  onClick={() => setShowChat(prev => !prev)}
-                  style={{
+                    position: 'absolute',
+                    top: '-8px',
+                    right: '-8px',
+                    background: '#2196F3',
                     color: 'white',
-                    backgroundColor: showChat ? 'red' : 'blue',
-                    border: 'none',
-                    cursor: 'pointer',
-                    padding: '8px 12px',
-                    borderRadius: '5px'
+                    borderRadius: '50%',
+                    width: '22px',
+                    height: '22px',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    fontSize: '12px',
+                    fontWeight: 'bold',
+                    border: '2px solid white'
                   }}
                 >
-                  {showChat ? <FaWindowClose /> : <FaComment />}
-                </button>
-              </div>
-            </div>
+                  {deletedTodos.length}
+                </div>
+              )}
+            </button>
           </div>
           {isLoading && <LoadingSpinner />}
           {isError && (

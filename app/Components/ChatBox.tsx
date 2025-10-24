@@ -11,37 +11,48 @@ interface Message {
 export default function ChatBox() {
   const [messages, setMessages] = useState<Message[]>([])
   const [input, setInput] = useState('')
-  const [username, setUsername] = useState("Anonymous")
-  useEffect (() => {
+  const [username, setUsername] = useState('Anonymous')
+  useEffect(() => {
+    if (
+      !process.env.NEXT_PUBLIC_PUSHER_KEY ||
+      !process.env.NEXT_PUBLIC_PUSHER_CLUSTER
+    ) {
+      console.error('Pusher environment variables are not set')
+      return
+    }
+
     // Connect to Pusher
-    const pusher = new Pusher(process.env.NEXT_PUBLIC_PUSHER_KEY!, {
-        cluster: process.env.NEXT_PUBLIC_PUSHER_CLUSTER!, 
+    const pusher = new Pusher(process.env.NEXT_PUBLIC_PUSHER_KEY, {
+      cluster: process.env.NEXT_PUBLIC_PUSHER_CLUSTER,
+      forceTLS: true
     })
-    const channel = pusher.subscribe("todo-chat")
-    channel.bind("new-message", (data: Message) => {
-        setMessages((prev => [...prev, data]))
+
+    const channel = pusher.subscribe('todo-chat')
+
+    channel.bind('new-message', (data: Message) => {
+      setMessages(prev => [...prev, data])
     })
     return () => {
-        pusher.unsubscribe("todo-chat")
-        pusher.disconnect()
+      pusher.unsubscribe('todo-chat')
+      pusher.disconnect()
     }
   }, [])
   const sendMessage = async (e: React.FormEvent) => {
-e.preventDefault()
-if (!input.trim()) return
+    e.preventDefault()
+    if (!input.trim()) return
 
     await fetch('/api/chat', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
         user: username,
-        message: input,
-      }),
+        message: input
+      })
     })
 
     setInput('')
   }
-return (
+  return (
     <div
       style={{
         borderTop: '1px solid lightgray',
@@ -60,13 +71,15 @@ return (
           borderRadius: '8px',
           padding: '10px',
           marginBottom: '10px',
-          background: '#fafafa',
+          background: '#fafafa'
         }}
       >
         {messages.map((msg, i) => (
           <div key={i} style={{ marginBottom: '5px' }}>
             <strong>{msg.user}</strong>: {msg.message}
-            <span style={{ fontSize: '0.8em', color: 'gray', marginLeft: '8px' }}>
+            <span
+              style={{ fontSize: '0.8em', color: 'gray', marginLeft: '8px' }}
+            >
               {new Date(msg.timestamp).toLocaleTimeString()}
             </span>
           </div>
@@ -83,7 +96,7 @@ return (
             flex: 1,
             border: '1px solid #ccc',
             padding: '5px',
-            borderRadius: '4px',
+            borderRadius: '4px'
           }}
         />
         <input
@@ -95,7 +108,7 @@ return (
             flex: 2,
             border: '1px solid #ccc',
             padding: '5px',
-            borderRadius: '4px',
+            borderRadius: '4px'
           }}
         />
         <button
@@ -106,7 +119,7 @@ return (
             border: 'none',
             borderRadius: '4px',
             padding: '6px 12px',
-            cursor: 'pointer',
+            cursor: 'pointer'
           }}
         >
           Send

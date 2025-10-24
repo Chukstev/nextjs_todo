@@ -20,7 +20,7 @@ export async function POST(req: Request) {
   await pusher.trigger('todo-chat', 'new-message', {
     user,
     message,
-    timestamp: new Date().toISOString(),
+    timestamp: new Date().toISOString()
   })
 
   return NextResponse.json({ success: true })
