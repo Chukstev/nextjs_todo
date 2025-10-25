@@ -45,7 +45,7 @@ const TodoList: React.FC<TodoListProps> = ({
             key={todo.id}
             style={{
               margin: '10px 0',
-              border: todo.completed ? '1px solid black' : '0.5px solid grey'
+              boxShadow: todo.completed ? '0 0 1px grey' : '0 0 2px black'
             }}
           >
             <label style={{ display: 'flex', alignItems: 'center' }}>
